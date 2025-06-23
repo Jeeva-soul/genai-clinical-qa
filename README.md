@@ -1,16 +1,17 @@
 # 🧠 GenAI Clinical Q&A Assistant
 
-A GenAI-powered clinical question-answering system that allows users to ask questions about patient cases, discharge notes, or medical PDFs — and get accurate answers in natural language.
+A GenAI-powered clinical question-answering system that allows users to ask questions about medical PDFs, patient cases, or discharge notes — and get accurate, natural language answers.
 
 ---
 
 ## 🚀 Features
 
-- 🔍 Semantic search over clinical documents using **Sentence Transformers**
-- 💬 Natural Language QA using **FLAN-T5** or **local Transformers**
-- 📄 Upload & index your own PDFs (e.g., discharge notes, lab reports)
-- 🧠 Custom-trained on real medical CSVs converted to PDF
-- 🧰 Built with **Python**, **FastAPI**, **FAISS**, **Hugging Face Transformers**
+- 🔍 Semantic search over clinical documents using **FAISS** & **Sentence Transformers**
+- 💬 Question answering via **FLAN-T5** (HuggingFace Inference API)
+- 📄 Upload your own medical PDFs for live querying
+- 🌐 Frontend built with **Streamlit** (no React/Node required)
+- 🧠 Custom-trained on real medical CSVs converted into PDF
+- ⚙️ Modular architecture using **FastAPI**, **Python**, and **Hugging Face**
 
 ---
 
@@ -19,15 +20,17 @@ A GenAI-powered clinical question-answering system that allows users to ask ques
 ```
 genai-clinical-qa/
 ├── backend/
-│   ├── app.py                  # FastAPI app for inference
-│   ├── qa_engine.py           # Embedding + QA logic
-│   ├── document_loader.py     # PDF parsing logic
-│   ├── embedding_store.py     # FAISS vectorstore setup
+│   ├── app.py                # FastAPI app for backend
+│   ├── qa_engine.py          # Embedding + QA logic
+│   ├── document_loader.py    # PDF text extraction
+│   ├── embedding_store.py    # FAISS vector index
+├── frontend/
+│   └── app.py                # Streamlit UI
 ├── data/
-│   └── clinical_docs/         # Sample PDFs or generated ones
-├── generate_pdfs_from_csv.py  # Convert CSV rows to PDFs
+│   └── clinical_docs/        # Sample/generated PDFs
+├── generate_pdfs_from_csv.py # Create PDFs from medical CSVs
 ├── requirements.txt
-└── .env                       # HuggingFace API Key (excluded)
+└── .env                      # HuggingFace token (excluded from Git)
 ```
 
 ---
@@ -35,29 +38,33 @@ genai-clinical-qa/
 ## 🛠 Setup Instructions
 
 ```bash
-# 1. Clone the repo
+# 1. Clone the repository
 git clone https://github.com/Jeeva-soul/genai-clinical-qa.git
 cd genai-clinical-qa
 
-# 2. Create virtual environment
+# 2. Create and activate virtual environment
 python -m venv venv
-venv\Scripts\activate  # On Windows
+venv\Scripts\activate        # (Windows)
 # or
-source venv/bin/activate  # On macOS/Linux
+source venv/bin/activate     # (macOS/Linux)
 
-# 3. Install dependencies
+# 3. Install required packages
 pip install -r requirements.txt
 
-# 4. Add HuggingFace token in a .env file
-HUGGINGFACEHUB_API_TOKEN=your_token_here
+# 4. Add HuggingFace token to .env
+echo HUGGINGFACEHUB_API_TOKEN=your_token_here > .env
 
-# 5. Run the FastAPI server
+# 5. Run the backend
 uvicorn backend.app:app --reload
+
+# 6. In a new terminal, run the Streamlit frontend
+cd frontend
+streamlit run app.py
 ```
 
 ---
 
-## 📬 Example API Request
+## 📬 Example API Request (Backend)
 
 ```
 POST /ask
@@ -68,26 +75,42 @@ POST /ask
 
 ---
 
-## 📊 Dataset Used
+## 💻 Streamlit UI Features
 
-- 🧠 [Brain Tumor Dataset (Kaggle)](https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset)
-- 📄 Converted to PDFs to simulate real clinical documents
+- Elegant design with custom CSS
+- Real-time question box with loading spinner
+- Upload your own PDFs to instantly augment the knowledge base
+- Beautifully styled answer container
 
 ---
 
-## 🧩 Future Roadmap
+## 📊 Dataset Used
 
-- 🔁 Streamlit or React frontend interface
-- 🏥 Clinical entity recognition (ICD-10 / SNOMED tagging)
-- ☁️ Deployment on Hugging Face Spaces or Azure App Service
-- 🧠 Option to switch between open-source LLMs and HuggingFace API
+- 🧠 [Brain Tumor Dataset (Kaggle)](https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset)
+- 📄 Converted to PDFs to simulate real-world clinical documents
+
+---
+
+## 🧩 Future Enhancements
+
+- 🧬 Clinical entity tagging (ICD-10, SNOMED)
+- ☁️ Cloud deployment (Azure, Hugging Face Spaces)
+- 🔁 Multiple LLM support (switch between APIs/local models)
+- 📈 Session history & PDF content preview
+
+---
+
+## ⚠️ Security Note
+
+Do **not** commit your `.env` or HuggingFace API keys to GitHub.
+They are automatically excluded using `.gitignore`.
 
 ---
 
 ## 👨‍💻 Author
 
 **Jeeva Manavalan**  
-🎓 UTA | Data Scientist | AI Enthusiast  
+🎓 University of Texas at Arlington | Data Scientist | GenAI Enthusiast  
 🔗 [LinkedIn](https://www.linkedin.com/in/jeeva-manavalan/) • [GitHub](https://github.com/Jeeva-soul)
 
 ---

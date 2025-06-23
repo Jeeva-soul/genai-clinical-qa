@@ -1,3 +1,12 @@
+---
+title: GenAI Clinical Q&A Assistant
+emoji: 🧠
+colorFrom: indigo
+colorTo: green
+sdk: docker
+app_file: Dockerfile
+pinned: false
+---
 # 🧠 GenAI Clinical Q&A Assistant
 
 A GenAI-powered clinical question-answering system that allows users to ask questions about medical PDFs, patient cases, or discharge notes — and get accurate, natural language answers.

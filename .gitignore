@@ -2,3 +2,4 @@
 data/clinical_docs/*.msgpack
 data/clinical_docs/*.bin
 .env 
+.env 
